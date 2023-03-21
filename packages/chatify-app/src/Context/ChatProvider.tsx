@@ -7,7 +7,7 @@ type Props = {
 };
 const ChatProvider = ({ children }: Props) => {
   const [selectedChat, setSelectedChat] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("guru");
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
