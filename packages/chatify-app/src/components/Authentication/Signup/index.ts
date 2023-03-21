@@ -1,3 +1,3 @@
 import { SignupForm } from "./signupform";
-
-export{SignupForm};
+import { FormTab } from "./formTab";
+export{SignupForm,FormTab};
