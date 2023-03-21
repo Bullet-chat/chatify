@@ -20,7 +20,6 @@ export const SignupForm = () => {
               </div>
             </div>
             <FormTab/>
-         
           </div>
         </div>
       </div>
