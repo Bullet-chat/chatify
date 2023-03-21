@@ -1,13 +1,15 @@
 import React from "react";
-import { SignupForm } from "./components/Authentication/Signup";
 import { Route } from "react-router-dom";
 import { Routes } from "react-router";
+import Authscreen from "./pages/Authscreen";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   return (
     <React.Fragment>
       <Routes>
-       <Route path="/" Component={SignupForm} />
+       <Route path="/" Component={Authscreen} />
+       <Route path="/chat" Component={ChatPage} />
        </Routes>
     </React.Fragment>
   );
