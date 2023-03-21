@@ -1,8 +1,8 @@
-import express from "express";
-import dotenv from "dotenv";
-import { connectDB } from "./config/db";
 
-import path from "path";
+const express = require("express");
+const dotenv = require('dotenv');
+const connectDB=require("./config/db");
+
 
 dotenv.config();
 connectDB();
