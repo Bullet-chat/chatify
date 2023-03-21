@@ -7,7 +7,7 @@ interface InputProps {
   label: string;
   onChange?: (value: any) => void;
 }
-const InputComponent = ({
+export const InputComponent = ({
   type,
   label,
   value,
@@ -35,4 +35,3 @@ const InputComponent = ({
   );
 };
 
-export default InputComponent;
