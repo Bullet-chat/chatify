@@ -1,11 +1,14 @@
 
+
 const express = require("express");
 const dotenv = require('dotenv');
-const connectDB=require("./config/db");
+const connect=require("./config/db");
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 
 dotenv.config();
-connectDB();
+connect();
 const app = express();
 
 app.use(express.json()); // to accept json data
@@ -13,7 +16,7 @@ app.use(express.json()); // to accept json data
 
 
 
-
+app.use(errorHandler);
 const PORT = process.env.PORT||3000;
 
 const server = app.listen(

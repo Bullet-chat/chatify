@@ -2,10 +2,10 @@
   "name": "chatify-server",
   "version": "1.0.0",
   "description": "Create real time chat applications",
-  "main": "server.tsx",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.tsx",
-    "server": "nodemon server.tsx"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Guruvignesh",
   "license": "ISC",
