@@ -14,12 +14,12 @@ const ChatProvider = ({ children }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo")
-      ? JSON.parse(localStorage.getItem("userInfo") ?? "")
-      : null;
-    setUser(userInfo);
+    // const userInfo = localStorage.getItem("userInfo")
+    //   ? JSON.parse(localStorage.getItem("userInfo") ?? "")
+    //   : null;
+    // setUser(userInfo);
 
-    if (!userInfo) navigate("/");
+    // if (!userInfo) navigate("/");
   }, [navigate]);
 
   return (
