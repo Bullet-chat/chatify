@@ -1,6 +1,5 @@
 
-import { BoxDots } from "../../../utils/BoxDots";
-import { InputComponent } from "../../../utils/Inputs";
+
 import { FormTab } from "./formTab";
 
 export const SignupForm = () => {
