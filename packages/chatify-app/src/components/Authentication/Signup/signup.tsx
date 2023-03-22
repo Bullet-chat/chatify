@@ -16,7 +16,7 @@ export function SignUp() {
     profilePicture: "",
   });
   function handleUserData(key: string, e: React.ChangeEvent<HTMLInputElement>) {
-    console.log("data");
+   
     setUserData((prev: userDataType) => ({
       [key]: e.target.value,
       ...prev,
@@ -55,11 +55,19 @@ export function SignUp() {
         value={userData.confirmPassword}
         onChange={(e) => handleUserData("confirmPassword", e)}
       />
+         <InputComponent
+        type="file"
+        label="Profile picture"
+        placeholder="Select the image file"
+        value={userData.profilePicture}
+        accept="image/*"
+        onChange={(e) => handleUserData("profilePicture", e)}
+      />
 
       <div className="relative">
         <a
           className="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-orange-700
-rounded-lg transition duration-200 hover:bg-orange-500 ease"
+rounded-lg transition duration-200 hover:bg-orange-500 ease cursor-pointer"
           onClick={SubmitHandler}
         >
           Sign Up
