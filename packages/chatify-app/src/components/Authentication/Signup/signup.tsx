@@ -1,4 +1,4 @@
-import { Toast } from "@chakra-ui/react";
+import { Toast, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { InputComponent } from "../../../utils/Inputs";
 interface userDataType {
@@ -6,25 +6,30 @@ interface userDataType {
   email: string;
   password: string;
   confirmPassword: string;
-  profilePicture: string;
+  profilePicture: {
+    name: string;
+    url: string;
+  };
 }
 export function SignUp() {
+  const toast = useToast();
   const [userData, setUserData] = useState<userDataType>({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    profilePicture: "",
+    profilePicture: {
+      name: "",
+      url: "",
+    },
   });
-  function handleUserData(key: string, e: React.ChangeEvent<HTMLInputElement>) {
+  function handleUserData(key: string, value: string | object) {
     setUserData((prev: userDataType) => ({
       ...prev,
-      [key]: e.target.value,
-    
+      [key]: value,
     }));
   }
-  const uploadImage = (pics:any) => {
-    // setPicLoading(true);
+  const uploadImage = (pics: any) => {
     if (pics === undefined) {
       Toast({
         title: "Please Select an Image!",
@@ -35,37 +40,40 @@ export function SignUp() {
       });
       return;
     }
-    console.log(pics.name,import.meta.env.VITE_CLOUD_NAME);
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
       data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
-      fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, {
-        method: "post",
-        body: data,
-      })
+      fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
+        {
+          method: "post",
+          body: data,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
-          // setPic(data.url.toString());
-          handleUserData("profilePicture",pics.name)
+          handleUserData("profilePicture", {
+            name: pics.name,
+            url: data.url.toString(),
+          });
           console.log(data.url.toString());
-          // setPicLoading(false);
         })
         .catch((err) => {
           console.log(err);
-          // setPicLoading(false);
         });
     } else {
-      // toast({
-      //   title: "Please Select an Image!",
-      //   status: "warning",
-      //   duration: 5000,
-      //   isClosable: true,
-      //   position: "bottom",
-      // });
-      // setPicLoading(false);
-      console.log("error","please select an image")
+      toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      console.log("error", "please select an image");
       return;
     }
   };
@@ -79,34 +87,33 @@ export function SignUp() {
         label="Username"
         placeholder="Guru"
         value={userData.userName}
-        onChange={(e) => handleUserData("userName", e)}
+        onChange={(e) => handleUserData("userName", e.target.value)}
       />
       <InputComponent
         type="email"
         label="Email"
         placeholder="nikilmethew@gmail.com"
         value={userData.email}
-        onChange={(e) => handleUserData("email", e)}
+        onChange={(e) => handleUserData("email", e.target.value)}
       />
       <InputComponent
         type="password"
         label="Password"
         placeholder="Password"
         value={userData.password}
-        onChange={(e) => handleUserData("password", e)}
+        onChange={(e) => handleUserData("password", e.target.value)}
       />
       <InputComponent
         type="password"
         label="Password"
         placeholder="Confirm Password"
         value={userData.confirmPassword}
-        onChange={(e) => handleUserData("confirmPassword", e)}
+        onChange={(e) => handleUserData("confirmPassword", e.target.value)}
       />
-         <InputComponent
+      <InputComponent
         type="file"
         label="Profile picture"
         placeholder="Select the image file"
-        value={userData.profilePicture}
         accept="image/*"
         onChange={(e) => uploadImage(e.target.files[0])}
       />
