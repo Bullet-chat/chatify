@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { InputComponent } from "../../../utils/Inputs";
-
+interface userDataType {
+  userName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  profilePicture: string;
+}
 export function SignUp() {
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<userDataType>({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    profilePic: "",
+    profilePicture: "",
   });
-  function handleUserData(key,e){
-    
+  function handleUserData(key: string, e: React.ChangeEvent<HTMLInputElement>) {
+    console.log("data");
+    setUserData((prev: userDataType) => ({
+      ...prev,
+      [key]: e.target.value,
+    }));
   }
   return (
     <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
@@ -20,7 +30,7 @@ export function SignUp() {
         label="Email"
         placeholder="nikilmethew@gmail.com"
         value={userData.userName}
-        onChange={(e)=>handleUserData("userName",e)}
+        onChange={(e) => handleUserData("userName", e)}
       />
       <InputComponent type="password" label="Password" placeholder="Password" />
       <InputComponent
