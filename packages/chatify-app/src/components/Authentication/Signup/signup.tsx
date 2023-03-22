@@ -1,5 +1,9 @@
 import { Toast, useToast } from "@chakra-ui/react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { CreateUser } from "../../../api/authentication";
 import { InputComponent } from "../../../utils/Inputs";
 interface userDataType {
   userName: string;
@@ -13,6 +17,7 @@ interface userDataType {
 }
 export function SignUp() {
   const toast = useToast();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState<userDataType>({
     userName: "",
     email: "",
@@ -21,6 +26,24 @@ export function SignUp() {
     profilePicture: {
       name: "",
       url: "",
+    },
+  });
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      return await CreateUser({
+        name: "data.userName",
+        email: "data@email.com",
+        password: "123456",
+        pic: "https://res.cloudinary.com/guruvignesh-chatapp/image/upload/v1679477225/al2qs0gvvlrurhgax4af.png",
+      });
+    },
+    onSuccess: (data, variables, context) => {
+      console.log("dataselectionsss", data, variables, context);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      navigate("/chat");
+    },
+    onError(error, variables, context) {
+      console.log("erro***********r", error, variables, context);
     },
   });
   function handleUserData(key: string, value: string | object) {
@@ -77,8 +100,14 @@ export function SignUp() {
       return;
     }
   };
-  function SubmitHandler() {
-    console.log(userData);
+  async function SubmitHandler() {
+   
+    mutation.mutate({
+      name: userData.userName,
+      email: userData.email,
+      password: userData.password,
+      pic: userData.profilePicture.url,
+    });
   }
   return (
     <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
