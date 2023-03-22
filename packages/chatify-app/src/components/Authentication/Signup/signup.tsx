@@ -31,19 +31,34 @@ export function SignUp() {
   const mutation = useMutation({
     mutationFn: async (data: any) => {
       return await CreateUser({
-        name: "data.userName",
-        email: "data@email.com",
-        password: "123456",
-        pic: "https://res.cloudinary.com/guruvignesh-chatapp/image/upload/v1679477225/al2qs0gvvlrurhgax4af.png",
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        pic: data.pic,
       });
     },
     onSuccess: (data, variables, context) => {
+      toast({
+        title: "Registration Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
       console.log("dataselectionsss", data, variables, context);
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate("/chat");
     },
-    onError(error, variables, context) {
-      console.log("erro***********r", error, variables, context);
+    onError(error:any, variables, context) {
+      console.log("eroorrrr->",error, variables, context)
+      toast({
+        title: "Error Occured!",
+        description:error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     },
   });
   function handleUserData(key: string, value: string | object) {
@@ -101,7 +116,6 @@ export function SignUp() {
     }
   };
   async function SubmitHandler() {
-   
     mutation.mutate({
       name: userData.userName,
       email: userData.email,
@@ -153,7 +167,7 @@ export function SignUp() {
 rounded-lg transition duration-200 hover:bg-orange-500 ease cursor-pointer"
           onClick={SubmitHandler}
         >
-          Sign Up
+          {mutation.isLoading ? "Creating new user..." : "Sign Up"}
         </a>
       </div>
     </div>
