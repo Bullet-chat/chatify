@@ -2,6 +2,7 @@
 
 const express = require("express");
 const dotenv = require('dotenv');
+const cors=require('cors');
 const connect=require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
@@ -12,7 +13,7 @@ const path = require("path");
 dotenv.config();
 connect();
 const app = express();
-
+app.use(cors({origin:"http://localhost:3000"}));
 app.use(express.json()); // to accept json data
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
@@ -48,7 +49,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "0.0.0.0",
     // credentials: true,
   },
 });
