@@ -1,3 +1,4 @@
+import { Toast } from "@chakra-ui/react";
 import { useState } from "react";
 import { InputComponent } from "../../../utils/Inputs";
 interface userDataType {
@@ -16,12 +17,58 @@ export function SignUp() {
     profilePicture: "",
   });
   function handleUserData(key: string, e: React.ChangeEvent<HTMLInputElement>) {
-   
     setUserData((prev: userDataType) => ({
-      [key]: e.target.value,
       ...prev,
+      [key]: e.target.value,
+    
     }));
   }
+  const uploadImage = (pics:any) => {
+    // setPicLoading(true);
+    if (pics === undefined) {
+      Toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
+    console.log(pics.name,import.meta.env.VITE_CLOUD_NAME);
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", import.meta.env.VITE_UPLOAD_PRESET);
+      data.append("cloud_name", import.meta.env.VITE_CLOUD_NAME);
+      fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // setPic(data.url.toString());
+          handleUserData("profilePicture",pics.name)
+          console.log(data.url.toString());
+          // setPicLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          // setPicLoading(false);
+        });
+    } else {
+      // toast({
+      //   title: "Please Select an Image!",
+      //   status: "warning",
+      //   duration: 5000,
+      //   isClosable: true,
+      //   position: "bottom",
+      // });
+      // setPicLoading(false);
+      console.log("error","please select an image")
+      return;
+    }
+  };
   function SubmitHandler() {
     console.log(userData);
   }
@@ -61,7 +108,7 @@ export function SignUp() {
         placeholder="Select the image file"
         value={userData.profilePicture}
         accept="image/*"
-        onChange={(e) => handleUserData("profilePicture", e)}
+        onChange={(e) => uploadImage(e.target.files[0])}
       />
 
       <div className="relative">
