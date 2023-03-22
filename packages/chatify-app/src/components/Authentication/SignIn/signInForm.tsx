@@ -52,6 +52,8 @@ export function SignInForm() {
   });
 
   function SubmitHandler() {
+    const {email,password} = userData
+    if(!email && !password) return;
     signInMutation.mutate(userData);
   }
   return (
