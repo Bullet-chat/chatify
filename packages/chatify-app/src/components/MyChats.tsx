@@ -58,7 +58,7 @@ const MyChats = ({ fetchAgain }: Props) => {
       flexDir="column"
       alignItems="center"
       p={3}
-      bg={Colors.primary}
+      bg={Colors.mainPrimary}
       w={{ base: "100%", md: "31%" }}
       borderRadius="lg"
       borderWidth="1px"
@@ -72,7 +72,7 @@ const MyChats = ({ fetchAgain }: Props) => {
         w="100%"
         justifyContent="space-between"
         alignItems="center"
-        color={Colors.secondary}
+        color={Colors.mainSecondary}
       >
         My Chats
         <GroupChatModal>
@@ -89,7 +89,7 @@ const MyChats = ({ fetchAgain }: Props) => {
         display="flex"
         flexDir="column"
         p={3}
-        bg={Colors.primary}
+        bg={Colors.mainPrimary}
         w="100%"
         h="100%"
         borderRadius="lg"
