@@ -49,8 +49,7 @@ export function SignUp() {
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate("/chat");
     },
-    onError(error:any, variables, context) {
-      console.log("eroorrrr->",error, variables, context)
+    onError:(error:any, variables, context)=>{
       toast({
         title: "Error Occured!",
         description:error.message,
