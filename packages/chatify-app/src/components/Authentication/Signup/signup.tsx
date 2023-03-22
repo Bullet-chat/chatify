@@ -114,7 +114,19 @@ export function SignUp() {
       return;
     }
   };
-  async function SubmitHandler() {
+  async function SubmitHandler(e:any) {
+    e.preventDefault();
+    if(userData.password !==userData.confirmPassword){
+      toast({
+        title: "Error Occured!",
+        description:"Password and Confirm Password must be same!!!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
     mutation.mutate({
       name: userData.userName,
       email: userData.email,
@@ -124,6 +136,7 @@ export function SignUp() {
   }
   return (
     <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
+      <form onSubmit={(e)=>SubmitHandler(e)}>
       <InputComponent
         type="text"
         label="Username"
@@ -161,14 +174,14 @@ export function SignUp() {
       />
 
       <div className="relative">
-        <a
+        <input
           className="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-orange-700
 rounded-lg transition duration-200 hover:bg-orange-500 ease cursor-pointer"
-          onClick={SubmitHandler}
-        >
-          {mutation.isLoading ? "Creating new user..." : "Sign Up"}
-        </a>
+        type="submit"
+        value= {mutation.isLoading ? "Creating new user..." : "Sign Up"}
+        />
       </div>
+      </form>
     </div>
   );
 }
