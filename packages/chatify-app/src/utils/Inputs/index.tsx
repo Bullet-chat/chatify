@@ -1,11 +1,12 @@
 import React from "react";
 
 interface InputProps {
-  type: "text" | "number" | "boolean" | "password"|"email";
+  type: "text" | "number" | "boolean" | "password"|"email" |"file";
   placeholder: string;
   value?: any;
   label: string;
   onChange?: (value: any) => void;
+  accept?:string;
 }
 export const InputComponent = ({
   type,
@@ -13,6 +14,7 @@ export const InputComponent = ({
   value,
   placeholder,
   onChange,
+  accept=""
 }: InputProps) => {
   return (
     <>
@@ -26,6 +28,9 @@ export const InputComponent = ({
         <input
           placeholder={placeholder}
           type={type}
+          value={value}
+          accept={accept}
+          onChange={onChange}
           className="border placeholder-gray-400 focus:outline-none
                   focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
                   border-gray-300 rounded-md"
