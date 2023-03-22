@@ -28,6 +28,7 @@ export const InputComponent = ({
         <input
           placeholder={placeholder}
           type={type}
+          required
           value={value}
           accept={accept}
           onChange={onChange}
