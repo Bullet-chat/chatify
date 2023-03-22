@@ -177,7 +177,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
-            color={Colors.secondary}
+            color={Colors.mainSecondary}
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
@@ -209,7 +209,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg={Colors.primary}
+            bg={Colors.mainPrimary}
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -252,7 +252,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
                 bg="#E0E0E0"
                 placeholder="Enter a message.."
                 value={newMessage}
-                color={Colors.secondary}
+                color={Colors.mainSecondary}
                 onChange={typingHandler}
               />
             </FormControl>

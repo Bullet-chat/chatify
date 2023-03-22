@@ -130,21 +130,21 @@ function SideDrawer() {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg={Colors.primary} 
+        bg={Colors.mainPrimary} 
         w="100%"
         p="5px 10px 5px 10px"
         borderWidth="5px"
-        borderColor={Colors.primary}
+        borderColor={Colors.mainPrimary}
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex"}} color={Colors.secondary} px={4}>
+            <Text display={{ base: "none", md: "flex"}} color={Colors.mainSecondary} px={4}>
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans" fontWeight="bold" color={Colors.secondary}>
+        <Text fontSize="2xl" fontFamily="Work sans" fontWeight="bold" color={Colors.mainSecondary}>
           Chatify
         </Text>
         <div>
