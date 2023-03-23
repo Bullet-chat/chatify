@@ -13,10 +13,10 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import { CreateGroup } from "../../api/group";
+import { CreateGroup, getSearchedUsers } from "../../api/group";
 import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
@@ -26,11 +26,12 @@ type Props = {
 const GroupChatModal = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState<any>([]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const { user, chats, setChats } = ChatState();
   const createGroupMutation = useMutation({
     mutationFn: CreateGroup,
     onSuccess: (data) => {
@@ -55,8 +56,27 @@ const GroupChatModal = ({ children }: Props) => {
       });
     },
   });
+  const getSuggestUsers = useQuery({
+    queryKey: ["search", search],
+    queryFn: async () => {
+      return await getSearchedUsers({ search, user });
+    },
+    enabled: search !== "",
+    onSuccess: (data: any) => {
+      setSearchResult(data);
+    },
 
-  const { user, chats, setChats } = ChatState();
+    onError: (error) => {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    },
+  });
 
   const handleGroup = (userToAdd: any) => {
     if (selectedUsers.includes(userToAdd)) {
@@ -76,31 +96,7 @@ const GroupChatModal = ({ children }: Props) => {
   const handleSearch = async (query: any) => {
     setSearch(query);
     if (!query) return;
-
-    try {
-      setLoading(true);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`,
-        config
-      );
-
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      toast({
-        title: "Error Occured!",
-        description: "Failed to Load the Search Results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
-    }
+    getSuggestUsers.refetch();
   };
 
   const handleDelete = (delUser: { _id?: string }) => {
@@ -167,8 +163,7 @@ const GroupChatModal = ({ children }: Props) => {
                 />
               ))}
             </Box>
-            {loading ? (
-              // <ChatLoading />
+            {getSuggestUsers.isLoading && search ? (
               <div>Loading...</div>
             ) : (
               searchResult
