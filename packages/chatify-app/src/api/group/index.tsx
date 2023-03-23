@@ -3,18 +3,17 @@ import axios from "axios";
 interface GroupProps {
   name: string;
   users: string;
+  user:any;
 }
 
-const config = {
-  headers: {
-    "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Credentials": "true",
-  },
-};
-export const CreateGroups = async (data: GroupProps) => {
-  const { name, users } = data;
-
+export const CreateGroup = async (data: GroupProps) => {
+  const { name, users,user } = data;
+  console.log("createGroupss", data);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
   return await axios
     .post(
       `${import.meta.env.VITE_BACKEND_API}/api/chat/group`,
