@@ -79,7 +79,7 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);
@@ -106,7 +106,7 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_API}/api/chat`, { userId }, config);
 
       if (!chats.find((c: { _id: any; }) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
@@ -213,6 +213,7 @@ function SideDrawer() {
               searchResult?.map((user:any) => (
                 <UserListItem
                   key={user._id}
+                  user={user}
                   handleFunction={() => accessChat(user._id)}
                 />
               ))

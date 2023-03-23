@@ -49,9 +49,7 @@ const GroupChatModal = ({ children }:Props) => {
 
   const handleSearch = async (query:any) => {
     setSearch(query);
-    if (!query) {
-      return;
-    }
+    if (!query) return;
 
     try {
       setLoading(true);
@@ -60,8 +58,8 @@ const GroupChatModal = ({ children }:Props) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
+    
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -99,7 +97,7 @@ const GroupChatModal = ({ children }:Props) => {
         },
       };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        `${import.meta.env.VITE_BACKEND_API}/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u:{_id?:string}) => u._id)),
@@ -153,7 +151,7 @@ const GroupChatModal = ({ children }:Props) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Jane"
+                placeholder="Add Users eg: Nikil, Methew"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
@@ -176,6 +174,7 @@ const GroupChatModal = ({ children }:Props) => {
                 .map((user:any) => (
                   <UserListItem
                     key={user._id}
+                    user={user}
                     handleFunction={() => handleGroup(user)}
                   />
                 ))

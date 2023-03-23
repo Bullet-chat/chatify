@@ -9,7 +9,6 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
-import { MessageSchema } from "../Models";
 interface Props {
   fetchAgain: boolean;
 }
@@ -17,11 +16,10 @@ const MyChats = ({ fetchAgain }: Props) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
+  
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
       const config = {
         headers: {
@@ -29,7 +27,10 @@ const MyChats = ({ fetchAgain }: Props) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_API}/api/chat`,
+        config
+      );
       setChats(data);
     } catch (error) {
       toast({
@@ -49,8 +50,8 @@ const MyChats = ({ fetchAgain }: Props) => {
         ? JSON.parse(localStorage.getItem("userInfo") ?? "")
         : ""
     );
-    fetchChats();
-  }, [fetchAgain]);
+    if (user.token) fetchChats();
+  }, [fetchAgain, user.token]);
 
   return (
     <Box
@@ -97,7 +98,7 @@ const MyChats = ({ fetchAgain }: Props) => {
       >
         {chats ? (
           <Stack overflowY="scroll">
-            {chats.map((chat:any) => (
+            {chats.map((chat: any) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"

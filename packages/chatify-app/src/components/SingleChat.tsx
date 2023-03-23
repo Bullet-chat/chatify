@@ -1,7 +1,6 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
-
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import { SetStateAction, useEffect, useState } from "react";
@@ -11,28 +10,25 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-
-import io, { Socket } from "socket.io-client";
+import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
-const ENDPOINT = "http://localhost:5000"; //-> After deployment
+import { socket } from "../api/socket";
 
 interface Props {
   fetchAgain: boolean;
   setFetchAgain: (args: boolean) => void;
 }
 const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
-  let socket: Socket<DefaultEventsMap, DefaultEventsMap>,
-    selectedChatCompare: { _id: any };
+  let selectedChatCompare: { _id: any };
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -55,9 +51,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       };
 
       setLoading(true);
-
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${import.meta.env.VITE_BACKEND_API}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -78,6 +73,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
 
   const sendMessage = async (event: { key: string }) => {
     if (event.key === "Enter" && newMessage) {
+      console.log("emmitting-value--->",socket,selectedChat)
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
@@ -88,7 +84,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${import.meta.env.VITE_BACKEND_API}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,
@@ -111,23 +107,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
   };
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    console.log("socket==>", socket);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
-
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    fetchMessages();
+    if (user.token) fetchMessages();
 
     selectedChatCompare = selectedChat;
-    // eslint-disable-next-line
   }, [selectedChat]);
 
   useEffect(() => {
+    if (!socket) return;
     socket.on("message recieved", (newMessageRecieved: any) => {
       if (
         !selectedChatCompare || // if chat is not selected or doesn't match current chat
