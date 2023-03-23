@@ -73,7 +73,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
 
   const sendMessage = async (event: { key: string }) => {
     if (event.key === "Enter" && newMessage) {
-      console.log("emmitting-value--->",socket,selectedChat)
       socket.emit("stop typing", selectedChat._id);
       try {
         const config = {
