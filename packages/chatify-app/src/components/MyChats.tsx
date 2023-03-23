@@ -17,7 +17,7 @@ const MyChats = ({ fetchAgain }: Props) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-  console.log("user-------------->", user);
+  
   const toast = useToast();
 
   const fetchChats = async () => {
@@ -34,7 +34,6 @@ const MyChats = ({ fetchAgain }: Props) => {
         config
       );
       setChats(data);
-      console.log("datat", data);
     } catch (error) {
       toast({
         title: "Error Occured!",
