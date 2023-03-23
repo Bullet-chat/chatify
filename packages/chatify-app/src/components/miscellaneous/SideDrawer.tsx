@@ -79,7 +79,7 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);

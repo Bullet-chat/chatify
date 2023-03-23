@@ -57,7 +57,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${import.meta.env.VITE_BACKEND_API}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -88,7 +88,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${import.meta.env.VITE_BACKEND_API}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,
