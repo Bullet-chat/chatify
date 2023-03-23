@@ -3,7 +3,7 @@
 const express = require("express");
 const dotenv = require('dotenv');
 const cors=require('cors');
-const connect=require("./config/db");
+const connectDB=require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
@@ -11,7 +11,7 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const path = require("path");
 
 dotenv.config();
-connect();
+connectDB();
 const app = express();
 app.use(cors({origin:"http://localhost:3000"}));
 app.use(express.json()); // to accept json data
