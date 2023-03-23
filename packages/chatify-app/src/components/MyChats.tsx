@@ -9,7 +9,6 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
-import { MessageSchema } from "../Models";
 interface Props {
   fetchAgain: boolean;
 }
@@ -21,7 +20,6 @@ const MyChats = ({ fetchAgain }: Props) => {
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
       const config = {
         headers: {

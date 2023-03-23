@@ -51,7 +51,6 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
         },
       };
       const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
-      console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -266,6 +265,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
               searchResult?.map((user:any) => (
                 <UserListItem
                   key={user._id}
+                  user={user}
                   handleFunction={() => handleAddUser(user)}
                 />
               ))
