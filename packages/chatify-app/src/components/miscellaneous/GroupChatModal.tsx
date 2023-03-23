@@ -14,7 +14,6 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import { CreateGroup, getSearchedUsers } from "../../api/group";
 import { ChatState } from "../../Context/ChatProvider";
@@ -29,7 +28,6 @@ const GroupChatModal = ({ children }: Props) => {
   const [selectedUsers, setSelectedUsers] = useState<any>([]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { user, chats, setChats } = ChatState();
   const createGroupMutation = useMutation({
