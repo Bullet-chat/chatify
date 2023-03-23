@@ -13,15 +13,17 @@ import {
   useToast,
   Box,
 } from "@chakra-ui/react";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { CreateGroup } from "../../api/group";
 import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
 type Props = {
   children: string | JSX.Element | JSX.Element[];
 };
-const GroupChatModal = ({ children }:Props) => {
+const GroupChatModal = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -29,10 +31,34 @@ const GroupChatModal = ({ children }:Props) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const createGroupMutation = useMutation({
+    mutationFn: CreateGroup,
+    onSuccess: (data) => {
+      setChats([data, ...chats]);
+      onClose();
+      toast({
+        title: "New Group Chat Created!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to Create the Chat!",
+        description: error.response.data,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    },
+  });
 
   const { user, chats, setChats } = ChatState();
 
-  const handleGroup = (userToAdd:any) => {
+  const handleGroup = (userToAdd: any) => {
     if (selectedUsers.includes(userToAdd)) {
       toast({
         title: "User already added",
@@ -47,7 +73,7 @@ const GroupChatModal = ({ children }:Props) => {
     setSelectedUsers([...selectedUsers, userToAdd]);
   };
 
-  const handleSearch = async (query:any) => {
+  const handleSearch = async (query: any) => {
     setSearch(query);
     if (!query) return;
 
@@ -58,8 +84,11 @@ const GroupChatModal = ({ children }:Props) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
-    
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`,
+        config
+      );
+
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -74,8 +103,10 @@ const GroupChatModal = ({ children }:Props) => {
     }
   };
 
-  const handleDelete = (delUser:{_id?:string}) => {
-    setSelectedUsers(selectedUsers.filter((sel:{_id?:string}) => sel._id !== delUser._id));
+  const handleDelete = (delUser: { _id?: string }) => {
+    setSelectedUsers(
+      selectedUsers.filter((sel: { _id?: string }) => sel._id !== delUser._id)
+    );
   };
 
   const handleSubmit = async () => {
@@ -89,40 +120,11 @@ const GroupChatModal = ({ children }:Props) => {
       });
       return;
     }
-
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_API}/api/chat/group`,
-        {
-          name: groupChatName,
-          users: JSON.stringify(selectedUsers.map((u:{_id?:string}) => u._id)),
-        },
-        config
-      );
-      setChats([data, ...chats]);
-      onClose();
-      toast({
-        title: "New Group Chat Created!",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-    } catch (error:any) {
-      toast({
-        title: "Failed to Create the Chat!",
-        description: error.response.data,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-    }
+    return createGroupMutation.mutate({
+      name: groupChatName,
+      users: JSON.stringify(selectedUsers.map((u: { _id?: string }) => u._id)),
+      user,
+    });
   };
 
   return (
@@ -157,7 +159,7 @@ const GroupChatModal = ({ children }:Props) => {
               />
             </FormControl>
             <Box w="100%" display="flex" flexWrap="wrap">
-              {selectedUsers.map((u:any) => (
+              {selectedUsers.map((u: any) => (
                 <UserBadgeItem
                   key={u._id}
                   user={u}
@@ -171,7 +173,7 @@ const GroupChatModal = ({ children }:Props) => {
             ) : (
               searchResult
                 ?.slice(0, 4)
-                .map((user:any) => (
+                .map((user: any) => (
                   <UserListItem
                     key={user._id}
                     user={user}
