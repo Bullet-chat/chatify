@@ -99,7 +99,7 @@ const GroupChatModal = ({ children }:Props) => {
         },
       };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        `${import.meta.env.VITE_BACKEND_API}/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u:{_id?:string}) => u._id)),

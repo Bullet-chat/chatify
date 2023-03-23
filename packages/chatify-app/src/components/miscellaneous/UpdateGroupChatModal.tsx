@@ -78,7 +78,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
         },
       };
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        `${import.meta.env.VITE_BACKEND_API}/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -136,7 +136,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupadd`,
+        `${import.meta.env.VITE_BACKEND_API}/api/chat/groupadd`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -181,7 +181,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
         },
       };
       const { data } = await axios.put(
-        `/api/chat/groupremove`,
+        `${import.meta.env.VITE_BACKEND_API}/api/chat/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,

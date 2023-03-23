@@ -17,7 +17,7 @@ const MyChats = ({ fetchAgain }: Props) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-
+  console.log("user-------------->", user);
   const toast = useToast();
 
   const fetchChats = async () => {
@@ -29,8 +29,12 @@ const MyChats = ({ fetchAgain }: Props) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_API}/api/chat`,
+        config
+      );
       setChats(data);
+      console.log("datat", data);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -49,8 +53,8 @@ const MyChats = ({ fetchAgain }: Props) => {
         ? JSON.parse(localStorage.getItem("userInfo") ?? "")
         : ""
     );
-    fetchChats();
-  }, [fetchAgain]);
+    if (user.token) fetchChats();
+  }, [fetchAgain, user.token]);
 
   return (
     <Box
@@ -97,7 +101,7 @@ const MyChats = ({ fetchAgain }: Props) => {
       >
         {chats ? (
           <Stack overflowY="scroll">
-            {chats.map((chat:any) => (
+            {chats.map((chat: any) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
