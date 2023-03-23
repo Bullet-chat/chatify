@@ -1,7 +1,6 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
-
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
 import { SetStateAction, useEffect, useState } from "react";
@@ -15,7 +14,6 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
-import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { socket } from "../api/socket";
 
 interface Props {
@@ -23,7 +21,7 @@ interface Props {
   setFetchAgain: (args: boolean) => void;
 }
 const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
@@ -53,7 +51,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       };
 
       setLoading(true);
-console.log("selectedChat=====>",selectedChat);
       const { data } = await axios.get(
         `${import.meta.env.VITE_BACKEND_API}/api/message/${selectedChat._id}`,
         config
