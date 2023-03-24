@@ -18,8 +18,6 @@ const Chatbox = ({ fetchAgain, setFetchAgain }: Props) => {
       p={3}
       bg={Colors.mainPrimary}
       width="100%"
-      // w={{ base: "100%", md: "68%" }}
-      borderRadius="lg"
       borderWidth="1px"
     >
       <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />

@@ -160,15 +160,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       {selectedChat ? (
         <>
           <Text
-            fontSize={{ base: "28px", md: "30px" }}
             pb={3}
             px={2}
             w="100%"
-            fontFamily="Work sans"
             display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
-            color={Colors.mainSecondary}
+            className="text-2xl text-black font-medium"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
