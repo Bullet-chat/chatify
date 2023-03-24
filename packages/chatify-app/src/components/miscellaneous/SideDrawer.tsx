@@ -26,13 +26,12 @@ import { useToast } from "@chakra-ui/toast";
 import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
-import NotificationBadge from 'react-notification-badge';
-import {Effect} from 'react-notification-badge';
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { ChatState } from "../../Context/ChatProvider";
 import { Colors } from "../../utils/Colors";
-
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
@@ -79,7 +78,10 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_API}/api/user?search=${search}`,
+        config
+      );
 
       setLoading(false);
       setSearchResult(data);
@@ -106,13 +108,18 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_API}/api/chat`, { userId }, config);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_API}/api/chat`,
+        { userId },
+        config
+      );
 
-      if (!chats.find((c: { _id: any; }) => c._id === data._id)) setChats([data, ...chats]);
+      if (!chats.find((c: { _id: any }) => c._id === data._id))
+        setChats([data, ...chats]);
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
-    } catch (error:any) {
+    } catch (error: any) {
       toast({
         title: "Error fetching the chat",
         description: error.message,
@@ -130,32 +137,38 @@ function SideDrawer() {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg={Colors.mainPrimary} 
+        bg={Colors.mainPrimary}
         w="100%"
         p="5px 10px 5px 10px"
         borderWidth="5px"
         borderColor={Colors.mainPrimary}
       >
+        <Text className="text-4xl text-black font-bold font-serif cursor-pointer">
+          Chatify
+        </Text>
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex"}} color={Colors.mainSecondary} px={4}>
+            <Text
+              display={{ base: "none", md: "flex" }}
+              color={Colors.mainSecondary}
+              px={4}
+            >
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans" fontWeight="bold" color={Colors.mainSecondary}>
-          Chatify
-        </Text>
         <div>
           <Menu>
-            <MenuButton p={1}>
-              <NotificationBadge
-                count={notification.length}
-                effect={Effect.SCALE}
-              />
-              <BellIcon fontSize="2xl" m={1} />
-            </MenuButton>
+            <Tooltip label="Notification" hasArrow placement="bottom-end">
+              <MenuButton p={1}>
+                <NotificationBadge
+                  count={notification.length}
+                  effect={Effect.SCALE}
+                />
+                <BellIcon fontSize="2xl" m={1} />
+              </MenuButton>
+            </Tooltip>
             <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif: any) => (
@@ -163,7 +176,9 @@ function SideDrawer() {
                   key={notif._id}
                   onClick={() => {
                     setSelectedChat(notif.chat);
-                    setNotification(notification.filter((n: any) => n !== notif));
+                    setNotification(
+                      notification.filter((n: any) => n !== notif)
+                    );
                   }}
                 >
                   {notif.chat.isGroupChat
@@ -174,14 +189,20 @@ function SideDrawer() {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
-              <Avatar
-                size="sm"
-                cursor="pointer"
-                name={user.name}
-                src={user.pic}
-              />
-            </MenuButton>
+            <Tooltip label={user.name} hasArrow placement="bottom-end">
+              <MenuButton
+                as={Button}
+                bg="white"
+                rightIcon={<ChevronDownIcon />}
+              >
+                <Avatar
+                  size="sm"
+                  cursor="pointer"
+                  name={user.name}
+                  src={user.pic}
+                />
+              </MenuButton>
+            </Tooltip>
             <MenuList>
               <ProfileModal user={user}>
                 <MenuItem>My Profile</MenuItem>
@@ -210,7 +231,7 @@ function SideDrawer() {
             {loading ? (
               <ChatLoading />
             ) : (
-              searchResult?.map((user:any) => (
+              searchResult?.map((user: any) => (
                 <UserListItem
                   key={user._id}
                   user={user}
