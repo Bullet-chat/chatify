@@ -14,7 +14,6 @@ export function UserDetails({ user }: userDetailsProps) {
       p={3}
       bg={Colors.mainPrimary}
       width="30%"
-      borderRadius="lg"
       borderWidth="1px"
     >
       <ChatRoomInfo user={user} />
