@@ -67,13 +67,13 @@ const MyChats = ({ fetchAgain }: Props) => {
       <Box
         pb={3}
         px={3}
-        fontSize={{ base: "28px", md: "30px" }}
-        fontFamily="Work sans"
+        // fontSize={{ base: "28px", md: "30px" }}
+        // fontFamily="Work sans"
         display="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
-        color={Colors.mainSecondary}
+      className="text-black text-lg font-medium"
       >
         Messages
         <GroupChatModal>
