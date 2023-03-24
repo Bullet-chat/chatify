@@ -10,7 +10,6 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
@@ -106,7 +105,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
   };
 
   useEffect(() => {
-    console.log("socket==>", socket);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
