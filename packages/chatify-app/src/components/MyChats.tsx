@@ -75,15 +75,9 @@ const MyChats = ({ fetchAgain }: Props) => {
         alignItems="center"
         color={Colors.mainSecondary}
       >
-        My Chats
+        Messages
         <GroupChatModal>
-          <Button
-            display="flex"
-            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
-          >
-            New Group Chat
-          </Button>
+          <AddIcon w={4} h={4} color="green.500"/>
         </GroupChatModal>
       </Box>
       <Box
