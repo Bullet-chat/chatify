@@ -220,7 +220,7 @@ function SideDrawer() {
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Search Contacts</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">Search Your Contacts</DrawerHeader>
           <DrawerBody>
             <Box display="flex" pb={2}>
               <Input
