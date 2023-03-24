@@ -146,19 +146,22 @@ function SideDrawer() {
         <Text className="text-4xl text-black font-bold font-serif cursor-pointer">
           Chatify
         </Text>
+        
+        <div>
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
             <i className="fas fa-search"></i>
             <Text
               display={{ base: "none", md: "flex" }}
-              color={Colors.mainSecondary}
+       
               px={4}
+              className="text-lg text-slate-600"
+
             >
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <div>
           <Menu>
             <Tooltip label="Notification" hasArrow placement="bottom-end">
               <MenuButton p={1}>
