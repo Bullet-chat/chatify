@@ -61,29 +61,22 @@ const MyChats = ({ fetchAgain }: Props) => {
       p={3}
       bg={Colors.mainPrimary}
       w={{ base: "100%", md: "31%" }}
-      borderRadius="lg"
       borderWidth="1px"
     >
       <Box
         pb={3}
         px={3}
-        fontSize={{ base: "28px", md: "30px" }}
-        fontFamily="Work sans"
+        // fontSize={{ base: "28px", md: "30px" }}
+        // fontFamily="Work sans"
         display="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
-        color={Colors.mainSecondary}
+      className="text-black text-lg font-medium"
       >
-        My Chats
+        Messages
         <GroupChatModal>
-          <Button
-            display="flex"
-            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
-          >
-            New Group Chat
-          </Button>
+          <AddIcon w={4} h={4} color="green.500"/>
         </GroupChatModal>
       </Box>
       <Box
