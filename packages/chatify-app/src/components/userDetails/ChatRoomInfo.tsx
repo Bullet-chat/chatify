@@ -14,7 +14,7 @@ export function ChatRoomInfo({ user }: userDetailsProps) {
   return (
     <Box>
       {!isGroupChat && (
-        <section className="w-64 mx-auto bg-[#20354b] px-8 py-6 shadow-lg">
+        <section className="w-64 mx-auto px-8 py-6 shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-gray-400 text-sm">2d ago</span>
           </div>
