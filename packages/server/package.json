@@ -4,8 +4,7 @@
   "description": "Create real time chat applications",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "nodemon server.js"
   },
   "author": "Guruvignesh",
   "license": "ISC",
