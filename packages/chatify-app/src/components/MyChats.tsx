@@ -9,6 +9,7 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
+import { ChatWithAI } from "./ChatWithAI";
 interface Props {
   fetchAgain: boolean;
 }
@@ -89,6 +90,7 @@ const MyChats = ({ fetchAgain }: Props) => {
         borderRadius="lg"
         overflowY="hidden"
       >
+        <ChatWithAI/>
         {chats ? (
           <Stack overflowY="scroll">
             {chats.map((chat: any) => (
