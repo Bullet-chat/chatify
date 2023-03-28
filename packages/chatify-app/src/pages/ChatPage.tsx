@@ -7,7 +7,7 @@ import SideDrawer from "../components/miscellaneous/SideDrawer";
 import { UserDetails } from "../components/userDetails";
 function ChatPage() {
   const [fetchAgain, setFetchAgain] = useState(false);
-  const { user, selectedChat } = ChatState();
+  const { user, selectedChat,isAIConversation } = ChatState();
   console.log(selectedChat);
   return (
     <div style={{ width: "100%" }}>
