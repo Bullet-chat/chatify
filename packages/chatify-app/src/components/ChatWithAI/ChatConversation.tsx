@@ -1,5 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { Dispatch, useEffect, useRef } from "react";
+import { ChatState } from "../../Context/ChatProvider";
+import createMessageObject from "../../utils/createMessageObject";
 import generateUniqueId from "../../utils/generateUniqueId";
 import { typeText } from "../../utils/typedText";
 interface ConversationProps {
@@ -13,12 +15,9 @@ export function ChatConversation({
   BotResponse,
 }: ConversationProps) {
   console.log(conversation);
-  // const [BotDiv] = ["1234"].map((e: any) => {
-  //   return document.getElementById(e);
-  // });
   const parentRef = useRef<any>();
+  const {user}=ChatState();
   useEffect(() => {
-    // console.log("botrespo===>", BotDiv, BotResponse);
     if (BotResponse) {
       fetchData();
     }
@@ -29,7 +28,8 @@ export function ChatConversation({
     await typeText(BotDiv, BotResponse)
       .then((response: any) => {
         BotDiv.innerHTML = "";
-        setConversation([...conversation, BotResponse]);
+        const botObj=createMessageObject({id:_generateId,content:BotResponse,isAi:true,user})
+        setConversation([...conversation, botObj]);
       })
       .catch((error) => console.log(error));
   }
@@ -37,13 +37,12 @@ export function ChatConversation({
     const div = document.createElement("div");
     div.id = _generateId;
     parentRef?.current?.appendChild(div);
-    console.log("genratedIdddddd", _generateId);
     return div;
   }
   return (
     <Box id="1234">
       {conversation.map((chat, index) => (
-        <Box key={index}>{chat}</Box>
+        <Box key={index}>{chat.content}---******--{chat.id}</Box>
       ))}
       <Box ref={parentRef}></Box>
     </Box>
