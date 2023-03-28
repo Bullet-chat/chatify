@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-
 type Props = {
   children: string | JSX.Element | JSX.Element[];
 };
 interface ChatContextType {
   notification: any;
-  selectedChat:any;
-  setSelectedChat:React.Dispatch<React.SetStateAction<string>> 
+  selectedChat: any;
+  setSelectedChat: React.Dispatch<React.SetStateAction<string>>;
 }
 const ChatContext = createContext<any>(null);
 const ChatProvider = ({ children }: Props) => {
@@ -28,6 +27,10 @@ const ChatProvider = ({ children }: Props) => {
 
     if (!userInfo) navigate("/");
   }, [navigate]);
+  useEffect(() => {
+    if (isAIConversation) setIsAIConversation(false);
+  }, [selectedChat]);
+
 
   return (
     <ChatContext.Provider
