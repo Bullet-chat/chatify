@@ -1,5 +1,6 @@
 import { Box, FormControl, Input } from "@chakra-ui/react";
 import React, { SetStateAction, useState } from "react";
+import { getAIResponse } from "../../api/openAPI";
 import { ChatState } from "../../Context/ChatProvider";
 import { Colors } from "../../utils/Colors";
 import { ChatConversation } from "./ChatConversation";
@@ -8,15 +9,21 @@ interface Props {
   setFetchAgain: (args: boolean) => void;
 }
 export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
-  const { isAIConversation } = ChatState();
+  const { isAIConversation,user } = ChatState();
   const [newMessage, setNewMessage] = useState("");
-  const [conversation,setConversation]=useState([])
-  function sendMessageToBot() {
-    console.log("called");
+  const [conversation, setConversation] = useState([]);
+  async function sendMessageToBot(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Enter" && newMessage.trim() !== "") {
+      const response=await getAIResponse({
+        prompt: newMessage,
+        user
+      })
+      console.log("response----> data",response);
+    }
   }
   function typingHandler(e: { target: { value: SetStateAction<string> } }) {
     setNewMessage(e.target.value);
-    return;
+    // return;
   }
   return (
     <Box
@@ -39,10 +46,10 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
         borderRadius="lg"
         overflowY="scroll"
       >
-        <ChatConversation data={conversation}/>
+        <ChatConversation data={conversation} />
       </Box>
       <FormControl
-        onKeyDown={sendMessageToBot}
+        onKeyDown={ sendMessageToBot}
         id="Ai-connections"
         isRequired
         mt={3}
@@ -59,5 +66,3 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
     </Box>
   );
 }
-
-
