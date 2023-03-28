@@ -5,17 +5,21 @@ import MyChats from "../components/MyChats";
 import Chatbox from "../components/Chatbox";
 import SideDrawer from "../components/miscellaneous/SideDrawer";
 import { UserDetails } from "../components/userDetails";
+import { AiChatroom } from "../components/ChatWithAI";
 function ChatPage() {
   const [fetchAgain, setFetchAgain] = useState(false);
-  const { user, selectedChat } = ChatState();
-  console.log(selectedChat);
+  const { user, selectedChat, isAIConversation } = ChatState();
+  console.log("user====>", user);
   return (
     <div style={{ width: "100%" }}>
       {user && <SideDrawer />}
       <Box display="flex" w="100%" h="91.5vh">
         {user && <MyChats fetchAgain={fetchAgain} />}
-        {user && (
+        {user && !isAIConversation && (
           <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
+        {isAIConversation && (
+          <AiChatroom fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
         {selectedChat && <UserDetails user={selectedChat} />}
       </Box>

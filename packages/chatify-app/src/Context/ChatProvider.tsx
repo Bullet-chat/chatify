@@ -1,13 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-const ChatContext = createContext<any>(null);
 type Props = {
   children: string | JSX.Element | JSX.Element[];
 };
+interface ChatContextType {
+  notification: any;
+  selectedChat: any;
+  setSelectedChat: React.Dispatch<React.SetStateAction<string>>;
+}
+const ChatContext = createContext<any>(null);
 const ChatProvider = ({ children }: Props) => {
   const [selectedChat, setSelectedChat] = useState();
   const [user, setUser] = useState("guru");
+  const [isAIConversation, setIsAIConversation] = useState(false);
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
 
@@ -21,6 +27,10 @@ const ChatProvider = ({ children }: Props) => {
 
     if (!userInfo) navigate("/");
   }, [navigate]);
+  useEffect(() => {
+    if (isAIConversation) setIsAIConversation(false);
+  }, [selectedChat]);
+
 
   return (
     <ChatContext.Provider
@@ -33,6 +43,8 @@ const ChatProvider = ({ children }: Props) => {
         setNotification,
         chats,
         setChats,
+        isAIConversation,
+        setIsAIConversation,
       }}
     >
       {children}
