@@ -9,16 +9,17 @@ interface Props {
   setFetchAgain: (args: boolean) => void;
 }
 export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
-  const { isAIConversation,user } = ChatState();
+  const { isAIConversation, user } = ChatState();
   const [newMessage, setNewMessage] = useState("");
-  const [conversation, setConversation] = useState([]);
+  const [BotResponse, setBotResponse] = useState("");
+  const [conversation, setConversation] = useState<any>([]);
   async function sendMessageToBot(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Enter" && newMessage.trim() !== "") {
-      const response=await getAIResponse({
+      const response = await getAIResponse({
         prompt: newMessage,
-        user
-      })
-      console.log("response----> data",response);
+        user,
+      });
+      if (response) setBotResponse(response.bot);
     }
   }
   function typingHandler(e: { target: { value: SetStateAction<string> } }) {
@@ -46,10 +47,14 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
         borderRadius="lg"
         overflowY="scroll"
       >
-        <ChatConversation data={conversation} />
+        <ChatConversation
+          conversation={conversation}
+          setConversation={setConversation}
+          BotResponse={BotResponse}
+        />
       </Box>
       <FormControl
-        onKeyDown={ sendMessageToBot}
+        onKeyDown={sendMessageToBot}
         id="Ai-connections"
         isRequired
         mt={3}
