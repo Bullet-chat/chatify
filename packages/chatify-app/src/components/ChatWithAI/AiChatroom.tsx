@@ -15,8 +15,11 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
   const [conversation, setConversation] = useState<any>([]);
   async function sendMessageToBot(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Enter" && newMessage.trim() !== "") {
+      setConversation([...conversation, newMessage]);
+      const queryText=newMessage.trim();
+      setNewMessage("")
       const response = await getAIResponse({
-        prompt: newMessage,
+        prompt: queryText,
         user,
       });
       if (response) setBotResponse(response.bot);
