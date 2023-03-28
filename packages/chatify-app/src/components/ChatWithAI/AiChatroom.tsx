@@ -3,22 +3,29 @@ import React, { SetStateAction, useState } from "react";
 import { getAIResponse } from "../../api/openAPI";
 import { ChatState } from "../../Context/ChatProvider";
 import { Colors } from "../../utils/Colors";
+import createMessageObject from "../../utils/createMessageObject";
+import generateUniqueId from "../../utils/generateUniqueId";
 import { ChatConversation } from "./ChatConversation";
 interface Props {
   fetchAgain: boolean;
   setFetchAgain: (args: boolean) => void;
 }
 export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
-  const { isAIConversation,user } = ChatState();
+  const { isAIConversation, user } = ChatState();
   const [newMessage, setNewMessage] = useState("");
-  const [conversation, setConversation] = useState([]);
+  const [BotResponse, setBotResponse] = useState("");
+  const [conversation, setConversation] = useState<any>([]);
   async function sendMessageToBot(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Enter" && newMessage.trim() !== "") {
-      const response=await getAIResponse({
-        prompt: newMessage,
-        user
-      })
-      console.log("response----> data",response);
+      const conversationObj=createMessageObject({id:generateUniqueId(),content:newMessage,user});
+      setConversation([...conversation, conversationObj]);
+      const queryText=newMessage.trim();
+      setNewMessage("")
+      const response = await getAIResponse({
+        prompt: queryText,
+        user,
+      });
+      if (response) setBotResponse(response.bot);
     }
   }
   function typingHandler(e: { target: { value: SetStateAction<string> } }) {
@@ -46,10 +53,14 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
         borderRadius="lg"
         overflowY="scroll"
       >
-        <ChatConversation data={conversation} />
+        <ChatConversation
+          conversation={conversation}
+          setConversation={setConversation}
+          BotResponse={BotResponse}
+        />
       </Box>
       <FormControl
-        onKeyDown={ sendMessageToBot}
+        onKeyDown={sendMessageToBot}
         id="Ai-connections"
         isRequired
         mt={3}
@@ -57,7 +68,7 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
         <Input
           variant="filled"
           bg="#E0E0E0"
-          placeholder="Enter a message.."
+          placeholder="Talk with me..."
           value={newMessage}
           color={Colors.mainSecondary}
           onChange={typingHandler}
