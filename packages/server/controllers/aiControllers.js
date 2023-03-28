@@ -1,12 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const {Configuration, OpenAIApi}=require('openai')
-// import { Configuration, OpenAIApi } from 'openai'
 
 const talkWithAi = asyncHandler(async (req, res, next) => {
   console.log(req, res);
   try {
-     // const prompt = req.body.prompt;
-     const prompt="Explain the openai"
+     const prompt = req.body.prompt;
      const configuration = new Configuration({
           apiKey: process.env.OPENAI_API_KEY,
         });
