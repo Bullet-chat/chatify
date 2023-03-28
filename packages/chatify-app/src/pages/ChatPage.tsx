@@ -5,7 +5,7 @@ import MyChats from "../components/MyChats";
 import Chatbox from "../components/Chatbox";
 import SideDrawer from "../components/miscellaneous/SideDrawer";
 import { UserDetails } from "../components/userDetails";
-import AiChatroom from "../components/ChatWithAI/AiChatroom";
+import { AiChatroom } from "../components/ChatWithAI";
 function ChatPage() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const { user, selectedChat,isAIConversation } = ChatState();

@@ -2,19 +2,21 @@ import { Box, FormControl, Input } from "@chakra-ui/react";
 import React, { SetStateAction, useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import { Colors } from "../../utils/Colors";
+import { ChatConversation } from "./ChatConversation";
 interface Props {
   fetchAgain: boolean;
   setFetchAgain: (args: boolean) => void;
 }
-function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
+export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
   const { isAIConversation } = ChatState();
   const [newMessage, setNewMessage] = useState("");
+  const [conversation,setConversation]=useState([])
   function sendMessageToBot() {
     console.log("called");
   }
-  function typingHandler(e: { target: { value: SetStateAction<string> } }){
-     setNewMessage(e.target.value)
-     return;
+  function typingHandler(e: { target: { value: SetStateAction<string> } }) {
+    setNewMessage(e.target.value);
+    return;
   }
   return (
     <Box
@@ -26,6 +28,19 @@ function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
       width="100%"
       borderWidth="1px"
     >
+      <Box
+        display="flex"
+        flexDir="column"
+        justifyContent="flex-end"
+        p={3}
+        bg={Colors.mainPrimary}
+        w="100%"
+        h="100%"
+        borderRadius="lg"
+        overflowY="scroll"
+      >
+        <ChatConversation data={conversation}/>
+      </Box>
       <FormControl
         onKeyDown={sendMessageToBot}
         id="Ai-connections"
@@ -45,4 +60,4 @@ function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
   );
 }
 
-export default AiChatroom;
+
