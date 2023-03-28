@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.12.9",
     "nodemon": "^2.0.21",
+    "openai": "^3.2.1",
     "socket.io": "^4.6.1"
   },
   "devDependencies": {
