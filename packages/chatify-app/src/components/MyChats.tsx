@@ -64,7 +64,6 @@ const MyChats = ({ fetchAgain }: Props) => {
       alignItems="center"
       p={3}
       w={{ base: "100%", md: "31%" }}
-      borderWidth="1px"
     >
       <Text className="text-4xl text-black font-bold font-sofia cursor-pointer text-left w-full">
         Chatify

@@ -17,7 +17,6 @@ const Chatbox = ({ fetchAgain, setFetchAgain }: Props) => {
       flexDir="column"
       p={3}
       width="100%"
-      borderWidth="1px"
     >
       <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
     </Box>
