@@ -7,7 +7,7 @@ export function SearchBox() {
       <input
         type="text"
         id="voice-search"
-        className="bg-[#F9FAFC] border border-[#DBE5ED] outline-none text-gray-900 text-sm rounded-lg focus:ring-[#76C00D] focus:border-[#76C00D] block w-full pl-2 p-2.5 font-sofia"
+        className="bg-[#F9FAFC] border border-[#DBE5ED] outline-none text-gray-900 text-sm rounded-lg focus:ring-[#76C00D] focus:border-[#76C00D] block w-full pl-2 p-2 font-sofia"
         placeholder="Search People"
       />
        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
