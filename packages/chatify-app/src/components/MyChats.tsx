@@ -11,6 +11,7 @@ import { ChatState } from "../Context/ChatProvider";
 import { Colors } from "../utils/Colors";
 import { ChatWithAI } from "./ChatWithAI";
 import { UsersListProps } from "../types/userTypes";
+import { SearchBox } from "./searchBox";
 interface Props {
   fetchAgain: boolean;
 }
@@ -68,6 +69,7 @@ const MyChats = ({ fetchAgain }: Props) => {
       <Text className="text-4xl text-black font-bold font-sofia cursor-pointer text-left w-full">
         Chatify
       </Text>
+   
       <Box
         pb={3}
         px={3}
@@ -82,6 +84,7 @@ const MyChats = ({ fetchAgain }: Props) => {
           <AddIcon w={3} h={3} color="gray.400" />
         </GroupChatModal>
       </Box>
+      <SearchBox/>
       <Box
         display="flex"
         flexDir="column"
