@@ -3,6 +3,7 @@ import React from "react";
 import { ChatRoomInfo, userDetailsProps } from ".";
 import { ChatState } from "../../Context/ChatProvider";
 import { Colors } from "../../utils/Colors";
+import SideDrawer from "../miscellaneous/SideDrawer";
 
 export function UserDetails({ user }: userDetailsProps) {
 
@@ -16,7 +17,8 @@ export function UserDetails({ user }: userDetailsProps) {
       width="30%"
       borderWidth="1px"
     >
-      <ChatRoomInfo user={user} />
+      <SideDrawer/>
+      {user && <ChatRoomInfo user={user} />}
     </Box>
   );
 }

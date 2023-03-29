@@ -13,6 +13,7 @@ export function ChatRoomInfo({ user }: userDetailsProps) {
   console.log("user", user);
   return (
     <Box>
+     
       {!isGroupChat && (
         <section className="w-64 mx-auto bg-[#20354b] px-8 py-6 shadow-lg">
           <div className="flex items-center justify-between">

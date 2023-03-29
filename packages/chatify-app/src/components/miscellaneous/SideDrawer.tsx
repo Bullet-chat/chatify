@@ -139,14 +139,10 @@ function SideDrawer() {
         alignItems="center"
         bg={Colors.mainPrimary}
         w="100%"
-        p="5px 10px 5px 10px"
+        // p="5px 10px 5px 10px"
         borderWidth="5px"
         borderColor={Colors.mainPrimary}
       >
-        <Text className="text-4xl text-black font-bold font-serif cursor-pointer">
-          Chatify
-        </Text>
-        
         <div>
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
           <Button variant="ghost" onClick={onOpen}>
