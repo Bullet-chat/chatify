@@ -3,16 +3,13 @@ import { ChatState } from "../Context/ChatProvider";
 import { Box } from "@chakra-ui/layout";
 import MyChats from "../components/MyChats";
 import Chatbox from "../components/Chatbox";
-import SideDrawer from "../components/miscellaneous/SideDrawer";
 import { UserDetails } from "../components/userDetails";
 import { AiChatroom } from "../components/ChatWithAI";
 function ChatPage() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const { user, selectedChat, isAIConversation } = ChatState();
-  console.log("user====>", user);
   return (
-    <div style={{ width: "100%" }}>
-      {/* {user && <SideDrawer />} */}
+    <div className="w-full bg-white">
       <Box display="flex" w="100%" h="100vh">
         {user && <MyChats fetchAgain={fetchAgain} />}
         {user && !isAIConversation && (

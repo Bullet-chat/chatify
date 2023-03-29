@@ -38,7 +38,6 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
       alignItems="center"
       flexDir="column"
       p={3}
-      bg={Colors.mainPrimary}
       width="100%"
       borderWidth="1px"
     >
