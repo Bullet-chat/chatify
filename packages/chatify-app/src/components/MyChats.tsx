@@ -64,6 +64,9 @@ const MyChats = ({ fetchAgain }: Props) => {
       w={{ base: "100%", md: "31%" }}
       borderWidth="1px"
     >
+        <Text className="text-4xl text-black font-bold font-serif cursor-pointer text-left w-full">
+          Chatify
+        </Text>
       <Box
         pb={3}
         px={3}

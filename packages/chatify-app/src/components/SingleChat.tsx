@@ -103,7 +103,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       }
     }
   };
-
+  console.log("messagesss==>",messages)
   useEffect(() => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
