@@ -13,7 +13,6 @@ export function UserDetails({ user }: userDetailsProps) {
       alignItems="center"
       flexDir="column"
       p={3}
-      bg={Colors.mainPrimary}
       width="30%"
       borderWidth="1px"
     >
