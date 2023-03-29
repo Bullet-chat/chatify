@@ -12,8 +12,8 @@ function ChatPage() {
   console.log("user====>", user);
   return (
     <div style={{ width: "100%" }}>
-      {user && <SideDrawer />}
-      <Box display="flex" w="100%" h="91.5vh">
+      {/* {user && <SideDrawer />} */}
+      <Box display="flex" w="100%" h="100vh">
         {user && <MyChats fetchAgain={fetchAgain} />}
         {user && !isAIConversation && (
           <Chatbox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
@@ -21,7 +21,8 @@ function ChatPage() {
         {isAIConversation && (
           <AiChatroom fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
-        {selectedChat && <UserDetails user={selectedChat} />}
+
+        {user && selectedChat && <UserDetails user={selectedChat} />}
       </Box>
     </div>
   );
