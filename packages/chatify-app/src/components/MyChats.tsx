@@ -12,6 +12,7 @@ import { Colors } from "../utils/Colors";
 import { ChatWithAI } from "./ChatWithAI";
 import { UsersListProps } from "../types/userTypes";
 import { SearchBox } from "./searchBox";
+import ProfileImageProvider from "./userAvatar/ProfileImageProvider";
 interface Props {
   fetchAgain: boolean;
 }
@@ -64,7 +65,6 @@ const MyChats = ({ fetchAgain }: Props) => {
       alignItems="center"
       p={3}
       w={{ base: "100%", md: "31%" }}
-      borderWidth="1px"
     >
       <Text className="text-4xl text-black font-bold font-sofia cursor-pointer text-left w-full">
         Chatify
@@ -88,7 +88,7 @@ const MyChats = ({ fetchAgain }: Props) => {
       <Box
         display="flex"
         flexDir="column"
-        p={3}
+     pt={3}
         w="100%"
         h="100%"
         borderRadius="lg"
@@ -112,15 +112,7 @@ const MyChats = ({ fetchAgain }: Props) => {
                     : "bg-white"
                 } flex`}
               >
-                <Box className="relative mr-5">
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                    alt=""
-                  />
-                  <span className="bottom-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                </Box>
-
+                <ProfileImageProvider userItem={chat}/>
                 <Box>
                   <Text className="text-[#4B5155] font-semibold font-sofia text-base">
                     {!chat.isGroupChat
@@ -130,8 +122,8 @@ const MyChats = ({ fetchAgain }: Props) => {
                   {chat.latestMessage && (
                     <Text className="text-[#7B8793] font-semibold text-xs">
                       {chat.latestMessage.sender.name} :
-                      {chat.latestMessage.content.length > 50
-                        ? chat.latestMessage.content.substring(0, 51) + "..."
+                      {chat.latestMessage.content.length > 20
+                        ? chat.latestMessage.content.substring(0, 20) + "..."
                         : chat.latestMessage.content}
                     </Text>
                   )}

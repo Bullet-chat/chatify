@@ -1,6 +1,7 @@
 import { Avatar } from "@chakra-ui/avatar";
+import { Box } from "@chakra-ui/react";
 import { Tooltip } from "@chakra-ui/tooltip";
-import ScrollableFeed from "react-scrollable-feed";
+import { useEffect, useRef } from "react";
 import {
   isLastMessage,
   isSameSender,
@@ -8,17 +9,25 @@ import {
   isSameUser,
 } from "../config/ChatLogics";
 import { ChatState } from "../Context/ChatProvider";
-interface Props{
-  messages:any;
+import { getMessageTimestamp } from "../utils/getMessageTimestamp";
+interface Props {
+  messages: any;
 }
-const ScrollableChat = ({ messages }:Props) => {
+const ScrollableChat = ({ messages }: Props) => {
   const { user } = ChatState();
-
+  const chatRoomRef=useRef(null);
+useEffect(() => {
+  scrollToBottom()
+}, [])
+function scrollToBottom() {
+  console.log("calleddddd",chatRoomRef?.current);
+  chatRoomRef?.current?.scrollIntoView({ behavior: "smooth" });
+}
   return (
-    <ScrollableFeed>
+    <div ref={chatRoomRef}>
       {messages &&
-        messages.map((m:any, i:number) => (
-          <div style={{ display: "flex" }} key={m._id}>
+        messages.map((m: any, i: number) => (
+          <div style={{ display: "flex"}} key={m._id}>
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
               <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
@@ -28,27 +37,33 @@ const ScrollableChat = ({ messages }:Props) => {
                   size="sm"
                   cursor="pointer"
                   name={m.sender.name}
+                  borderWidth="1px"
+                  borderColor="#707070b4"
                   src={m.sender.pic}
                 />
               </Tooltip>
             )}
-            <span
+            <Box
+              className="flex flex-col"
               style={{
-                backgroundColor: `${
-                  m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
-                }`,
                 marginLeft: isSameSenderMargin(messages, m, i, user._id),
                 marginTop: isSameUser(messages, m, i) ? 3 : 10,
-                borderRadius: "20px",
-                padding: "5px 15px",
-                maxWidth: "75%",
               }}
             >
-              {m.content}
-            </span>
+              <span
+                className={`${m.sender._id !== user._id ?"ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white":"mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"}`}
+              >
+                {m.content}
+              </span>
+       
+              {(isSameSender(messages, m, i, user._id) ||
+                isLastMessage(messages, i, user._id) || m.sender._id === user._id) && (
+                <span onClick={()=>console.log(m.createdAt)}>{getMessageTimestamp(m.createdAt)}</span>
+              )}
+            </Box>
           </div>
         ))}
-    </ScrollableFeed>
+    </div>
   );
 };
 

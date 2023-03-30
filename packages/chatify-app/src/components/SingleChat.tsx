@@ -3,7 +3,7 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
-import { SetStateAction, useEffect, useState } from "react";
+import { Fragment, SetStateAction, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./miscellaneous/ProfileModal";
@@ -103,7 +103,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       }
     }
   };
-  console.log("messagesss==>",messages)
   useEffect(() => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
@@ -113,7 +112,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
 
   useEffect(() => {
     if (user.token) fetchMessages();
-
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
@@ -160,13 +158,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       {selectedChat ? (
         <>
           <Text
-            pb={3}
-            px={2}
+            py={3}
+            px={5}
             w="100%"
-            display="flex"
-            justifyContent={{ base: "space-between" }}
-            alignItems="center"
-            className="text-2xl text-black font-medium"
+            className="text-base flex justify-between items-center text-[#4B5155] font-sofia font-semibold bg-[#F2F2F2] rounded-tl-2xl rounded-tr-2xl  border-2 border-[#DBE5ED]"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
@@ -198,11 +193,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg={Colors.mainPrimary}
             w="100%"
-            h="100%"
-            borderRadius="lg"
-            overflowY="hidden"
+            h="88vh"
+            className="bg-[#F9FAFC] rounded-bl-2xl rounded-br-2xl border-2 border-[#DBE5ED] border-t-0"
           >
             {loading ? (
               <Spinner
@@ -213,7 +206,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages">
+              <div className="messages overflow-auto">
                 <ScrollableChat messages={messages} />
               </div>
             )}
@@ -238,10 +231,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
               )}
               <Input
                 variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
+                bg="#FFFFFF"
+                placeholder="Enter your message here..."
                 value={newMessage}
-                color={Colors.mainSecondary}
+                borderRadius="full"
+                borderWidth="1"
+                padding="30px"
+                borderColor="#DBE5ED"
+                outline={"none"}
+                textColor="#7B8793"
                 onChange={typingHandler}
               />
             </FormControl>
