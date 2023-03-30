@@ -2,9 +2,14 @@ import { Box } from "@chakra-ui/react";
 import { ChatState } from "../../Context/ChatProvider";
 
 export function ChatWithAI() {
-  const { isAIConversation, setIsAIConversation } = ChatState();
+  const { isAIConversation, setIsAIConversation, setSelectedChat } =
+    ChatState();
   function handleAIChat() {
-    setIsAIConversation(!isAIConversation);
+    setSelectedChat(undefined);
+    setTimeout(()=>{
+      setIsAIConversation(!isAIConversation);
+
+    },0)
   }
   return (
     <Box
