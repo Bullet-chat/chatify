@@ -17,10 +17,14 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
   const [conversation, setConversation] = useState<any>([]);
   async function sendMessageToBot(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Enter" && newMessage.trim() !== "") {
-      const conversationObj=createMessageObject({id:generateUniqueId(),content:newMessage,user});
+      const conversationObj = createMessageObject({
+        id: generateUniqueId(),
+        content: newMessage,
+        user,
+      });
       setConversation([...conversation, conversationObj]);
-      const queryText=newMessage.trim();
-      setNewMessage("")
+      const queryText = newMessage.trim();
+      setNewMessage("");
       const response = await getAIResponse({
         prompt: queryText,
         user,
@@ -66,7 +70,13 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
       >
         <Input
           variant="filled"
-          bg="#E0E0E0"
+          size="lg"
+          bg="#FFFFFF"
+          textColor="#7B8793"
+          borderColor="#DBE5ED"
+          borderRadius="50px"
+          outline="none"
+          paddingY="10px"
           placeholder="Talk with me..."
           value={newMessage}
           color={Colors.mainSecondary}
