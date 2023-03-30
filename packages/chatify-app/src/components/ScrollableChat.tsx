@@ -9,7 +9,7 @@ import {
   isSameUser,
 } from "../config/ChatLogics";
 import { ChatState } from "../Context/ChatProvider";
-import { getMessageContent } from "../utils/getMessageContent";
+import { getMessageTimestamp } from "../utils/getMessageTimestamp";
 interface Props {
   messages: any;
 }
@@ -58,7 +58,7 @@ function scrollToBottom() {
        
               {(isSameSender(messages, m, i, user._id) ||
                 isLastMessage(messages, i, user._id) || m.sender._id === user._id) && (
-                <span onClick={()=>console.log(m.createdAt)}>{getMessageContent(m.createdAt)}</span>
+                <span onClick={()=>console.log(m.createdAt)}>{getMessageTimestamp(m.createdAt)}</span>
               )}
             </Box>
           </div>
