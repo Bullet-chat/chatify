@@ -1,6 +1,7 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Box } from "@chakra-ui/react";
 import { Tooltip } from "@chakra-ui/tooltip";
+import { useEffect, useRef } from "react";
 import {
   isLastMessage,
   isSameSender,
@@ -14,12 +15,19 @@ interface Props {
 }
 const ScrollableChat = ({ messages }: Props) => {
   const { user } = ChatState();
-
+  const chatRoomRef=useRef(null);
+useEffect(() => {
+  scrollToBottom()
+}, [])
+function scrollToBottom() {
+  console.log("calleddddd",chatRoomRef?.current);
+  chatRoomRef?.current?.scrollIntoView({ behavior: "smooth" });
+}
   return (
-    <>
+    <div ref={chatRoomRef}>
       {messages &&
         messages.map((m: any, i: number) => (
-          <div style={{ display: "flex" }} key={m._id}>
+          <div style={{ display: "flex"}} key={m._id}>
             {(isSameSender(messages, m, i, user._id) ||
               isLastMessage(messages, i, user._id)) && (
               <Tooltip label={m.sender.name} placement="bottom-start" hasArrow>
@@ -43,14 +51,7 @@ const ScrollableChat = ({ messages }: Props) => {
               }}
             >
               <span
-                style={{
-                  backgroundColor: `${
-                    m.sender._id === user._id ? "#AFBBC6" : "#FFFFFF"
-                  }`,
-                  borderWidth: "1px",
-                  color: m.sender._id === user._id ? "#FFFFFF" : "#7B8793",
-                }}
-                className="rounded-lg font-sofia border-[#707070b4] py-2 px-5"
+                className={`${m.sender._id !== user._id ?"ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white":"mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"}`}
               >
                 {m.content}
               </span>
@@ -62,7 +63,7 @@ const ScrollableChat = ({ messages }: Props) => {
             </Box>
           </div>
         ))}
-    </>
+    </div>
   );
 };
 
