@@ -27,7 +27,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
-  const chatRoomRef = useRef(null);
   let selectedChatCompare: { _id: any };
   const defaultOptions = {
     loop: true,
@@ -207,7 +206,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages overflow-auto" ref={chatRoomRef}>
+              <div className="messages overflow-auto">
                 <ScrollableChat messages={messages} />
               </div>
             )}
