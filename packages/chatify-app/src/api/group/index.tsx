@@ -9,6 +9,10 @@ interface SearchProps{
      search?: string;
      user:any;
 }
+interface CreateChatRoomProps{
+  clientId?: string;
+  user:any;
+}
 
 export const CreateGroup = async (data: GroupProps) => {
   const { name, users,user } = data;
@@ -45,3 +49,18 @@ export const getSearchedUsers =async (data: SearchProps) => {
         )
        .then((res) => res.data);
    };
+
+   export const CreateChatRoom = async (data: CreateChatRoomProps) => {
+    const { clientId,user } = data;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    return await axios.post(
+      `${import.meta.env.VITE_BACKEND_API}/api/chat`,
+      { clientId },
+        config
+      )
+      .then((res) => res.data);
+  };
