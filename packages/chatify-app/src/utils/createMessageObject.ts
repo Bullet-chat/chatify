@@ -17,6 +17,6 @@ export default function createMessageObject({
     isAi,
     content,
     user,
-    timeStamp: new Date(),
+    timeStamp: new Date().toISOString(),
   };
 }
