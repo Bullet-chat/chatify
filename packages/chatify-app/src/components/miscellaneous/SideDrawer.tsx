@@ -98,8 +98,6 @@ function SideDrawer() {
   };
 
   const accessChat = async (userId: any) => {
-    console.log(userId);
-
     try {
       setLoadingChat(true);
       const config = {
@@ -139,7 +137,6 @@ function SideDrawer() {
         alignItems="center"
         bg={Colors.mainPrimary}
         w="100%"
-        // p="5px 10px 5px 10px"
         borderWidth="5px"
         borderColor={Colors.mainPrimary}
       >
