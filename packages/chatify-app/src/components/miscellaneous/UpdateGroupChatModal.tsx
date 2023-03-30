@@ -208,7 +208,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }:Props
 
   return (
     <>
-      <IconButton display={{ base: "flex" }} icon={<ViewIcon />} onClick={onOpen} aria-label="view-button" />
+      <ViewIcon onClick={onOpen} className="cursor-pointer"/>
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
