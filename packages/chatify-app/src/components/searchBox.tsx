@@ -1,9 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { CreateChatRoom } from "../api/group";
 import { SearchContacts } from "../api/search";
 import { ChatState } from "../Context/ChatProvider";
 import { useDebounce } from "../hooks";
+import UserListItem from "./userAvatar/UserListItem";
 export function SearchBox() {
   const [searchText, setSearchText] = useState("");
   const { user } = ChatState();
@@ -43,7 +45,13 @@ export function SearchBox() {
     </div>
     {debouncedSearchText !== "" && isLoading
         ? "Loading..."
-        : debouncedSearchText}
+        :  suggestions?.map((suggestUser: any) => (
+          <UserListItem
+            key={suggestUser._id}
+            user={suggestUser}
+            handleFunction={() => CreateChatRoom({clientId:suggestUser._id,user})}
+          />
+        ))}
     </Box>
   );
 }
