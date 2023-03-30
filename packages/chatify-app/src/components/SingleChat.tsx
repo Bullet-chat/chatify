@@ -3,7 +3,7 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
-import { Fragment, SetStateAction, useEffect, useState } from "react";
+import { Fragment, SetStateAction, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./miscellaneous/ProfileModal";
@@ -27,6 +27,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
   const toast = useToast();
+  const chatRoomRef = useRef(null);
   let selectedChatCompare: { _id: any };
   const defaultOptions = {
     loop: true,
@@ -103,7 +104,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       }
     }
   };
-  console.log("messagesss==>", messages);
   useEffect(() => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
@@ -113,7 +113,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
 
   useEffect(() => {
     if (user.token) fetchMessages();
-
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
@@ -160,7 +159,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
       {selectedChat ? (
         <>
           <Text
-            pb={3}
+            py={3}
             px={5}
             w="100%"
             className="text-base flex justify-between items-center text-[#4B5155] font-sofia font-semibold bg-[#F2F2F2] rounded-tl-2xl rounded-tr-2xl  border-2 border-[#DBE5ED]"
@@ -208,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages overflow-auto">
+              <div className="messages overflow-auto" ref={chatRoomRef}>
                 <ScrollableChat messages={messages} />
               </div>
             )}
