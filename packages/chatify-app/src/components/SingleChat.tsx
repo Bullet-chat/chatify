@@ -163,7 +163,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
             pb={3}
             px={5}
             w="100%"
-            className="text-base flex justify-between items-center text-[#4B5155] font-sofia font-semibold bg-[#F9FAFC] rounded-tl-2xl rounded-tr-2xl  border-2 border-[#DBE5ED]"
+            className="text-base flex justify-between items-center text-[#4B5155] font-sofia font-semibold bg-[#F2F2F2] rounded-tl-2xl rounded-tr-2xl  border-2 border-[#DBE5ED]"
           >
             <IconButton
               display={{ base: "flex", md: "none" }}
@@ -196,8 +196,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
             justifyContent="flex-end"
             p={3}
             w="100%"
-            h="100%"
-            overflowY="scroll"
+            h="88vh"
             className="bg-[#F9FAFC] rounded-bl-2xl rounded-br-2xl border-2 border-[#DBE5ED] border-t-0"
           >
             {loading ? (
@@ -209,7 +208,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
                 margin="auto"
               />
             ) : (
-              <div className="messages">
+              <div className="messages overflow-auto">
                 <ScrollableChat messages={messages} />
               </div>
             )}
