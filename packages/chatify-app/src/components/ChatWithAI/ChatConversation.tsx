@@ -16,7 +16,7 @@ export function ChatConversation({
 }: ConversationProps) {
   console.log(conversation);
   const parentRef = useRef<any>();
-  const {user}=ChatState();
+  const { user } = ChatState();
   useEffect(() => {
     if (BotResponse) {
       fetchData();
@@ -28,7 +28,12 @@ export function ChatConversation({
     await typeText(BotDiv, BotResponse)
       .then((response: any) => {
         BotDiv.innerHTML = "";
-        const botObj=createMessageObject({id:_generateId,content:BotResponse,isAi:true,user})
+        const botObj = createMessageObject({
+          id: _generateId,
+          content: BotResponse,
+          isAi: true,
+          user,
+        });
         setConversation([...conversation, botObj]);
       })
       .catch((error) => console.log(error));
@@ -39,12 +44,22 @@ export function ChatConversation({
     parentRef?.current?.appendChild(div);
     return div;
   }
+  console.log("conversation0000", conversation);
   return (
-    <Box id="1234">
-      {conversation.map((chat, index) => (
-        <Box key={index}>{chat.content}---******--{chat.id}</Box>
+    <Box id="1234" className="flex flex-col font-sofia overflow-y-auto">
+      {conversation.map((chat) => (
+        <Box
+          key={chat.id}
+          className={`${
+            !chat.isAi
+              ? "ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white max-w-xl self-start flex"
+              : "mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white max-w-xl self-end flex"
+          }`}
+        >
+          {chat.content}
+        </Box>
       ))}
-      <Box ref={parentRef}></Box>
+      <Box ref={parentRef} className="bg-blue-400 rounded-lg ml-3 mt-3 px-1"></Box>
     </Box>
   );
 }
