@@ -253,7 +253,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }: Props) => {
           justifyContent="center"
           h="100%"
         >
-          <Text fontSize="3xl" pb={3} fontFamily="Work sans">
+          <Text fontSize="3xl" pb={3} className="font-sofia">
             Click on a user to start chatting
           </Text>
         </Box>
