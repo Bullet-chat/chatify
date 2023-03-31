@@ -8,11 +8,11 @@ interface Props {
   setFetchAgain: (args: boolean) => void;
 }
 const Chatbox = ({ fetchAgain, setFetchAgain }: Props) => {
-  const { selectedChat } = ChatState();
+  const { selectedChat,isAIConversation } = ChatState();
 
   return (
     <Box
-      display={{ base: selectedChat ? "flex" : "none", md: "flex" }}
+      display={{ base: (isAIConversation ||selectedChat )? "flex" : "none", md: "flex" }}
       alignItems="center"
       flexDir="column"
       p={3}

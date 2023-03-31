@@ -6,7 +6,7 @@ import { ChatState } from "../../Context/ChatProvider";
 function ProfileImageProvider({ userItem }: any) {
   const { user } = ChatState();
   const defaultUserImage =
-    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80";
+    "https://png.pngtree.com/element_our/20200610/ourmid/pngtree-default-avatar-image_2237213.jpg";
   const [userImage, setUserImage] = React.useState(defaultUserImage);
   useEffect(() => {
     if (userItem.isGroupChat) {

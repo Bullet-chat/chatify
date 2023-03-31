@@ -20,7 +20,7 @@ interface Props {
 const MyChats = ({ fetchAgain }: Props) => {
   const [loggedUser, setLoggedUser] = useState();
 
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  const { isAIConversation,selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
   const toast = useToast();
 
@@ -57,10 +57,9 @@ const MyChats = ({ fetchAgain }: Props) => {
     );
     if (user.token) fetchChats();
   }, [fetchAgain, user.token]);
-  console.log("chatss====>", chats);
   return (
     <Box
-      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      display={{ base: (isAIConversation || selectedChat) ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
