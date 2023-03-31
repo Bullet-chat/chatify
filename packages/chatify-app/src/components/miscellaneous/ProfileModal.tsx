@@ -13,13 +13,21 @@ import {
   Text,
   Image,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { ChatState } from "../../Context/ChatProvider";
+
 interface Props {
   children?: string | JSX.Element | JSX.Element[];
   user: any;
 }
 const ProfileModal = ({ user, children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { user: currentUser } = ChatState();
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/");
+  };
   return (
     <>
       {children ? (
@@ -63,7 +71,13 @@ const ProfileModal = ({ user, children }: Props) => {
               Email: {user.email}
             </Text>
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            {user._id === currentUser._id ? (
+              <Button onClick={logoutHandler}>Logout</Button>
+            ) : null}
+
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
