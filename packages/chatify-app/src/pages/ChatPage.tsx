@@ -5,6 +5,7 @@ import MyChats from "../components/MyChats";
 import Chatbox from "../components/Chatbox";
 import { UserDetails } from "../components/userDetails";
 import { AiChatroom } from "../components/ChatWithAI";
+import Sidebar from "../components/SideBar/sideBar";
 function ChatPage() {
   const [fetchAgain, setFetchAgain] = useState(false);
   const { user, selectedChat, isAIConversation } = ChatState();
@@ -20,6 +21,7 @@ function ChatPage() {
         )}
 
         {false && <UserDetails user={selectedChat} />}
+        {user && <Sidebar />}
       </Box>
     </div>
   );
