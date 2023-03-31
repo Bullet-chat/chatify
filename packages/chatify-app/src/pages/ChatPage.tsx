@@ -19,7 +19,7 @@ function ChatPage() {
           <AiChatroom fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
         )}
 
-        {user && selectedChat && <UserDetails user={selectedChat} />}
+        {false && <UserDetails user={selectedChat} />}
       </Box>
     </div>
   );
