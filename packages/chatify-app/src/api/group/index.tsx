@@ -1,5 +1,4 @@
 import axios from "axios";
-
 interface GroupProps {
   name: string;
   users: string;
@@ -52,6 +51,7 @@ export const getSearchedUsers =async (data: SearchProps) => {
 
    export const CreateChatRoom = async (data: CreateChatRoomProps) => {
     const { clientId,user } = data;
+    console.log("clientIdddddd",clientId)
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -59,7 +59,7 @@ export const getSearchedUsers =async (data: SearchProps) => {
     };
     return await axios.post(
       `${import.meta.env.VITE_BACKEND_API}/api/chat`,
-      { clientId },
+      { userId:clientId },
         config
       )
       .then((res) => res.data);
