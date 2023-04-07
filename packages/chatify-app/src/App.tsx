@@ -5,6 +5,7 @@ import Authscreen from "./pages/Authscreen";
 import ChatPage from "./pages/ChatPage";
 
 function App() {
+  console.log("dataenvfile=====>",import.meta.env.VITE_APP_URL)
   return (
     <React.Fragment>
       <Routes>

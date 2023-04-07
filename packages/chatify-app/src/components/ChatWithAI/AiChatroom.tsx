@@ -72,9 +72,10 @@ export function AiChatroom({ fetchAgain, setFetchAgain }: Props) {
           variant="filled"
           size="lg"
           bg="#FFFFFF"
-          textColor="#7B8793"
+          textColor="#2a2c2e"
           borderColor="#DBE5ED"
           borderRadius="50px"
+          style={{color:"#2a2c2e"}}
           outline="none"
           paddingY="10px"
           placeholder="Talk with me..."
